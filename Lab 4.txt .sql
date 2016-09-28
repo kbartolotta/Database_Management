@@ -6,78 +6,78 @@ Lab 4
 --1. 
 SELECT city
 FROM agents
-WHERE aid in (Select aid
-		from orders
-		where cid ='c006'
+WHERE aid IN (SELECT aid
+		FROM orders
+		WHERE cid ='c006'
 		);
 
 --2. 		
-select pid
-from orders
-where aid in (select aid
-		from orders
-		where cid in (select cid
-				from customers
-				where city = 'Kyoto'
+SELECT pid
+FROM orders
+WHERE aid IN (SELECT aid
+		FROM orders
+		WHERE cid IN (SELECT cid
+				FROM customers
+				WHERE city = 'Kyoto'
 			)
 		)
-order by pid desc;
+ORDER BY pid DESC;
 
 --3.
-select cid, name
-from customers
-where cid in (select cid
-		from orders
-		where aid in (select aid
-				from orders
-				where aid != 'a03'
+SELECT cid, name
+FROM customers
+WHERE cid IN (SELECT cid
+		FROM orders
+		WHERE aid IN (SELECT aid
+				FROM orders
+				WHERE aid != 'a03'
 			)
 	);
 
 --4.
-select cid
-from customers
-where cid in (select cid
-		from orders
-		where pid in (select pid
-				from orders
-				where pid = 'p01'
-					and pid = 'p07'
+SELECT cid
+FROM customers
+WHERE cid IN (SELECT cid
+		FROM orders
+		WHERE pid IN (SELECT pid
+				FROM orders
+				WHERE pid = 'p01'
+					AND pid = 'p07'
 			)
 	);
 
 --5.
-select pid
-from orders
-where cid not in (select cid
-			from orders
-			where aid in (select aid
-					from orders
-					where aid = 'a08'
+SELECT pid
+FROM orders
+WHERE cid NOT IN (SELECT cid
+			FROM orders
+			WHERE aid IN (SELECT aid
+					FROM orders
+					WHERE aid = 'a08'
 				)
 		)
-order by pid Desc;
+ORDER BY pid DESC;
 
 
 --6.
-select name, discount, city
-from customers
-where cid in (select cid
-		from orders
-		where aid in (select aid
-				from agents
-				where city = 'Dallas'
-					or city = 'New York'
+SELECT name, discount, city
+FROM customers
+WHERE cid IN (SELECT cid
+		FROM orders
+		WHERE aid IN (SELECT aid
+				FROM agents
+				WHERE city = 'Dallas'
+					OR city = 'New York'
 			)
 	);
 
 --7.
-select cid, name
-from customers
-Where discount in (select discount
-			from customers
-			where city = 'Dallas'
-				or city = 'London'
+SELECT cid, name
+FROM customers
+WHERE discount IN (SELECT discount
+			FROM customers
+			WHERE city = 'Dallas'
+				OR city = 'London'
 		);
 
 /* 
