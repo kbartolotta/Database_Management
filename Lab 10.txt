@@ -29,7 +29,7 @@ CREATE OR REPLACE FUNCTION IsPreReqFor(int, REFCURSOR)
 RETURNS REFCURSOR AS $$
 DECLARE
 	inputPreReqNum int := $1;
-	resultSet REFCURSOR := $2;
+	resultSet resultSet := $2;
 BEGIN
 	OPEN resultSet FOR
 		SELECT courseNum
