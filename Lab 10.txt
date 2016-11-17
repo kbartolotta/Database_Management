@@ -1,0 +1,44 @@
+﻿/*
+Write two functions (stored procedures) that take an integer course number as their only parameter: 
+1. func1on PreReqsFor(courseNum) - Returns the immediate prerequisites for the passed-in course number. 
+2. func1on IsPreReqFor(courseNum) - Returns the courses for which the passed-in course number is an immediate pre-requisite.
+*/
+--1.
+CREATE OR REPLACE FUNCTION PreReqsFor(int, REFCURSOR)
+RETURNS REFCURSOR AS $$
+DECLARE
+	inputCourseNum int := $1;
+	resultSet REFCURSOR := $2;
+BEGIN
+	OPEN resultSet FOR
+		SELECT num, name, credits
+		FROM Courses
+		JOIN Prerequisites
+		ON Courses.num = Prerequisites.preReqNum
+		WHERE Prerequisites.courseNum= inputCourseNum;
+	RETURN resultSet;
+END;
+$$
+language plpgsql;
+
+SELECT PreReqsFor(499, 'results');
+Fetch all from results;
+
+--2.
+CREATE OR REPLACE FUNCTION IsPreReqFor(int, REFCURSOR)
+RETURNS REFCURSOR AS $$
+DECLARE
+	inputPreReqNum int := $1;
+	resultSet REFCURSOR := $2;
+BEGIN
+	OPEN resultSet FOR
+		SELECT courseNum
+		FROM Prerequisites
+		WHERE preReqNum = inputPreReqNum;
+	RETURN resultSet;
+END;
+$$
+language plpgsql;
+
+SELECT IsPreReqFor(308, 'results');
+FETCH ALL FROM results;
